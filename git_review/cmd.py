@@ -258,7 +258,10 @@ def set_hooks_commit_msg(remote, target_file):
         remote_url = get_remote_url(remote)
         if (remote_url.startswith('http://') or
                 remote_url.startswith('https://')):
-            hook_url = urljoin(remote_url, '/tools/hooks/commit-msg')
+            if '/r/' in remote_url:
+                hook_url = urljoin(remote_url, '/r/tools/hooks/commit-msg')
+            else:
+                hook_url = urljoin(remote_url, '/tools/hooks/commit-msg')
             if VERBOSE:
                 print("Fetching commit hook from: %s" % hook_url)
             res = run_http_exc(CannotInstallHook, hook_url, stream=True)
