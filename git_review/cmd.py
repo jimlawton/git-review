@@ -258,7 +258,9 @@ def set_hooks_commit_msg(remote, target_file):
         remote_url = get_remote_url(remote)
         if (remote_url.startswith('http://') or
                 remote_url.startswith('https://')):
-            if '/r/' in remote_url:
+            parsed_url = urlparse(remote_url)
+            path = parsed_url.path
+            if path.startswith('/r/'):
                 hook_url = urljoin(remote_url, '/r/tools/hooks/commit-msg')
             else:
                 hook_url = urljoin(remote_url, '/tools/hooks/commit-msg')
